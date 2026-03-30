@@ -13,7 +13,15 @@ st.set_page_config(page_title="Traffic AI Dashboard", layout="wide")
 st.markdown("""
 <style>
 
-/* Background */
+/* Hide Streamlit header */
+header {visibility: hidden;}
+
+/* Remove top padding */
+.block-container {
+    padding-top: 1rem;
+}
+
+/* App background */
 .stApp {
     background-color: #0e1117;
 }
@@ -23,29 +31,25 @@ st.markdown("""
     background-color: #161b22;
 }
 
-/* Force ALL text to be visible */
-html, body, [class*="css"]  {
-    color: white !important;
-}
-
 /* Sidebar labels */
 [data-testid="stSidebar"] label {
     color: white !important;
-    font-weight: 500;
+    font-weight: 600;
 }
 
-/* Input text */
-input, select, textarea {
-    color: black !important;
+/* Sidebar checkbox text */
+[data-testid="stSidebar"] span {
+    color: white !important;
 }
 
-/* Headings */
-.heading {
-    color:#00ffff;
-    text-shadow:0 0 8px #00ffff;
+/* Inputs */
+input, select {
+    background-color: #0e1117 !important;
+    color: white !important;
+    border: 1px solid #00ffff !important;
 }
 
-/* Card */
+/* Cards */
 .card {
     background: rgba(255,255,255,0.05);
     padding: 20px;
@@ -54,15 +58,27 @@ input, select, textarea {
     margin-bottom: 20px;
 }
 
-/* Buttons */
+/* Headings */
+.heading {
+    color:#00ffff;
+    text-shadow:0 0 8px #00ffff;
+}
+
+/* Button */
 .stButton>button {
     background: linear-gradient(90deg, #00c6ff, #0072ff);
     color: white;
     border-radius: 8px;
 }
 
+/* General text */
+html, body, [class*="css"] {
+    color: white !important;
+}
+
 </style>
 """, unsafe_allow_html=True)
+
 # ------------------ TITLE ------------------
 st.markdown("""
 <h1 style='text-align:center;color:#00ffff;
@@ -131,12 +147,12 @@ if st.sidebar.button("Predict"):
     with col1:
         st.markdown('<div class="card">', unsafe_allow_html=True)
 
-        st.markdown(f"<h2 class='heading'>🚦 Prediction Result</h2>", unsafe_allow_html=True)
+        st.markdown("<h2 class='heading'>🚦 Prediction Result</h2>", unsafe_allow_html=True)
 
         st.markdown(f"""
-        <p class='signal'>{signal_color(traffic_label)} {traffic_label}</p>
-        <h3 style='color:white;'>Signal Time: {signal} sec</h3>
-        <h3 style='color:white;'>Total Vehicles: {total}</h3>
+        <p style='font-size:22px;'>{signal_color(traffic_label)} {traffic_label}</p>
+        <h3>Signal Time: {signal} sec</h3>
+        <h3>Total Vehicles: {total}</h3>
         """, unsafe_allow_html=True)
 
         st.markdown('</div>', unsafe_allow_html=True)
