@@ -13,7 +13,7 @@ st.set_page_config(page_title="Traffic AI Dashboard", layout="wide")
 st.markdown("""
 <style>
 
-/* App background */
+/* Background */
 .stApp {
     background-color: #0e1117;
 }
@@ -23,7 +23,29 @@ st.markdown("""
     background-color: #161b22;
 }
 
-/* Cards */
+/* Force ALL text to be visible */
+html, body, [class*="css"]  {
+    color: white !important;
+}
+
+/* Sidebar labels */
+[data-testid="stSidebar"] label {
+    color: white !important;
+    font-weight: 500;
+}
+
+/* Input text */
+input, select, textarea {
+    color: black !important;
+}
+
+/* Headings */
+.heading {
+    color:#00ffff;
+    text-shadow:0 0 8px #00ffff;
+}
+
+/* Card */
 .card {
     background: rgba(255,255,255,0.05);
     padding: 20px;
@@ -32,28 +54,15 @@ st.markdown("""
     margin-bottom: 20px;
 }
 
-/* Neon headings */
-.heading {
-    color:#00ffff;
-    text-shadow:0 0 10px #00ffff;
-}
-
-/* Signal indicator */
-.signal {
-    font-size: 25px;
-    font-weight: bold;
-}
-
-/* Responsive fix */
-@media (max-width: 768px) {
-    .card {
-        padding: 15px;
-    }
+/* Buttons */
+.stButton>button {
+    background: linear-gradient(90deg, #00c6ff, #0072ff);
+    color: white;
+    border-radius: 8px;
 }
 
 </style>
 """, unsafe_allow_html=True)
-
 # ------------------ TITLE ------------------
 st.markdown("""
 <h1 style='text-align:center;color:#00ffff;
