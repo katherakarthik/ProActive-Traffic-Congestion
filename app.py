@@ -17,15 +17,19 @@ st.set_page_config(
 )
 
 # ── CROSS-BROWSER ROBUST CSS ──────────────────────────────────────────────────
+# ── CROSS-BROWSER ROBUST CSS ──────────────────────────────────────────────────
 st.markdown("""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Inter:wght@400;500;600&display=swap');
 
 /* ── Reset & Base ── */
-header { visibility: hidden; }
+/* FIX: Don't hide the whole header, just the decoration line if needed */
+[data-testid="stHeader"] {
+    background-color: rgba(0,0,0,0);
+}
+
 .block-container {
-    padding-top: 1.5rem !important;
-    padding-bottom: 2rem !important;
+    padding-top: 2rem !important;
     max-width: 1400px;
 }
 
@@ -35,23 +39,23 @@ header { visibility: hidden; }
     font-family: 'Inter', sans-serif !important;
 }
 
-/* ── Background grid pattern ── */
-.stApp::before {
-    content: '';
-    position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background-image:
-        linear-gradient(rgba(0,229,255,0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0,229,255,0.03) 1px, transparent 1px);
-    background-size: 40px 40px;
-    pointer-events: none;
-    z-index: 0;
-}
-
-/* ── Sidebar ── */
+/* ── Sidebar Fixes ── */
 [data-testid="stSidebar"] {
     background-color: #0d1420 !important;
     border-right: 1px solid rgba(0, 229, 255, 0.15) !important;
+    z-index: 100;
+}
+
+/* Target labels and text specifically rather than '*' to avoid breaking icons */
+[data-testid="stSidebar"] .stText, 
+[data-testid="stSidebar"] label, 
+[data-testid="stSidebar"] p {
+    color: #e2e8f0 !important;
+}
+
+/* Ensure the Sidebar Toggle Button is visible against your dark background */
+[data-testid="stHeader"] button {
+    color: #00e5ff !important;
 }
 
 /* Force ALL sidebar text white — fixes Brave / Edge / mobile */
