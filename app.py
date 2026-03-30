@@ -13,15 +13,11 @@ st.set_page_config(page_title="Traffic AI Dashboard", layout="wide")
 st.markdown("""
 <style>
 
-/* Hide Streamlit header */
+/* Hide header */
 header {visibility: hidden;}
+.block-container {padding-top: 1rem;}
 
-/* Remove top padding */
-.block-container {
-    padding-top: 1rem;
-}
-
-/* App background */
+/* Background */
 .stApp {
     background-color: #0e1117;
 }
@@ -33,58 +29,52 @@ header {visibility: hidden;}
 
 /* Sidebar labels */
 [data-testid="stSidebar"] label {
-    color: white !important;
+    color: #ffffff !important;
     font-weight: 600;
-}
-
-/* Sidebar checkbox text */
-[data-testid="stSidebar"] span {
-    color: white !important;
 }
 
 /* Inputs */
 input, select {
-    background-color: #0e1117 !important;
+    background-color: #1e293b !important;
     color: white !important;
     border: 1px solid #00ffff !important;
 }
 
 /* Cards */
 .card {
-    background: rgba(255,255,255,0.05);
+    background: #111827;   /* solid instead of transparent */
     padding: 20px;
-    border-radius: 15px;
-    backdrop-filter: blur(10px);
+    border-radius: 12px;
     margin-bottom: 20px;
 }
 
-/* Headings */
+/* Headings (IMPORTANT CHANGE) */
 .heading {
-    color:#00ffff;
-    text-shadow:0 0 8px #00ffff;
+    color: #00e5ff;   /* less harsh than cyan */
+    font-weight: 700;
 }
 
-/* Button */
+/* Subtitle */
+.subtitle {
+    color: #e5e7eb;
+    text-align: center;
+}
+
+/* Buttons */
 .stButton>button {
     background: linear-gradient(90deg, #00c6ff, #0072ff);
     color: white;
     border-radius: 8px;
 }
 
-/* General text */
-html, body, [class*="css"] {
-    color: white !important;
-}
-
 </style>
 """, unsafe_allow_html=True)
-
 # ------------------ TITLE ------------------
 st.markdown("""
-<h1 style='text-align:center;color:#00ffff;
-text-shadow:0 0 10px #00ffff;'>🚦 Smart Traffic Dashboard</h1>
+<h1 style='text-align:center; color:#00e5ff; font-weight:700;'>
+🚦 Smart Traffic Dashboard
+</h1>
 """, unsafe_allow_html=True)
-
 st.markdown(
     "<h3 style='text-align:center;color:white;'>Real-time traffic prediction & signal optimization</h3>",
     unsafe_allow_html=True
