@@ -268,7 +268,7 @@ def make_dark_fig(figsize=(6, 3)):
     fig.patch.set_facecolor('#0d1420')
     ax.set_facecolor('#0d1420')
     for spine in ax.spines.values():
-        spine.set_edgecolor('rgba(0,229,255,0.15)')
+        spine.set_edgecolor((0, 0.898, 1.0, 0.15))
     ax.tick_params(colors='#94a3b8', labelsize=10)
     ax.xaxis.label.set_color('#94a3b8')
     ax.yaxis.label.set_color('#94a3b8')
@@ -426,7 +426,7 @@ if "last_prediction" in st.session_state:
                         color='#e2e8f0', fontsize=10, fontweight='600')
 
         ax.set_ylabel("Count", color='#64748b', fontsize=10)
-        ax.yaxis.grid(True, color='rgba(100,116,139,0.15)', linestyle='--', zorder=0)
+        ax.yaxis.grid(True, color=(0.392, 0.455, 0.549, 0.15), linestyle='--', zorder=0)
         ax.set_axisbelow(True)
         ax.spines['top'].set_visible(False)
         ax.spines['right'].set_visible(False)
@@ -497,7 +497,7 @@ with fi_col:
                 color=[grad_colors[i] for i in range(len(sorted_idx))],
                 height=0.6, edgecolor='none', zorder=3
             )
-            ax.xaxis.grid(True, color='rgba(100,116,139,0.15)', linestyle='--', zorder=0)
+            ax.xaxis.grid(True, color=(0.392, 0.455, 0.549, 0.15), linestyle='--', zorder=0)
             ax.set_axisbelow(True)
             ax.set_xlabel("Importance Score", color='#64748b', fontsize=10)
             ax.spines['top'].set_visible(False)
@@ -543,7 +543,7 @@ with trend_col:
     ax.set_ylabel("Signal Time (sec)", color='#64748b', fontsize=10)
     ax.set_xticks([0, 6, 12, 18, 23])
     ax.set_xticklabels(['12am', '6am', '12pm', '6pm', '11pm'])
-    ax.yaxis.grid(True, color='rgba(100,116,139,0.15)', linestyle='--', zorder=0)
+    ax.yaxis.grid(True, color=(0.392, 0.455, 0.549, 0.15), linestyle='--', zorder=0)
     ax.set_axisbelow(True)
     ax.spines['top'].set_visible(False)
     ax.spines['right'].set_visible(False)
@@ -591,7 +591,7 @@ if simulate:
             vcounts = [s_car, s_bike, s_bus, s_truck]
             ax.bar(veh, vcounts, color=["#00c6ff","#0072ff","#6366f1","#8b5cf6"],
                    width=0.5, zorder=3, edgecolor='none')
-            ax.yaxis.grid(True, color='rgba(100,116,139,0.15)', linestyle='--', zorder=0)
+            ax.yaxis.grid(True, color=(0.392, 0.455, 0.549, 0.15), linestyle='--', zorder=0)
             ax.set_axisbelow(True)
             ax.set_title(f"Step {i+1}/{STEPS}", color='#64748b', fontsize=10, pad=6)
             ax.spines['top'].set_visible(False)
@@ -608,7 +608,7 @@ if simulate:
                             alpha=0.12, color='#00e5ff')
             ax.set_ylabel("Signal (sec)", color='#64748b', fontsize=10)
             ax.set_xlabel("Step", color='#64748b', fontsize=10)
-            ax.yaxis.grid(True, color='rgba(100,116,139,0.15)', linestyle='--', zorder=0)
+            ax.yaxis.grid(True, color=(0.392, 0.455, 0.549, 0.15), linestyle='--', zorder=0)
             ax.set_axisbelow(True)
             ax.spines['top'].set_visible(False)
             ax.spines['right'].set_visible(False)
