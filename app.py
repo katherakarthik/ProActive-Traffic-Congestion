@@ -12,18 +12,28 @@ st.set_page_config(page_title="Traffic Dashboard", layout="wide")
 # ------------------ DARK THEME ------------------
 st.markdown("""
 <style>
-body {background-color: #0e1117; color: white;}
-.stApp {background-color: #0e1117;}
-h1, h2, h3 {color: #00f2ff;}
-.stButton>button {
-    background: linear-gradient(90deg, #00c6ff, #0072ff);
-    color: white;
-    border-radius: 8px;
-    height: 3em;
-    width: 100%;
+.stApp {
+    background-color: #0e1117 !important;
 }
 </style>
 """, unsafe_allow_html=True)
+
+# ------------------ TITLE ------------------
+st.markdown("""
+<h1 style='
+text-align:center;
+color:#00ffff;
+font-weight:700;
+text-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff;
+'>
+🚦 Smart Traffic Dashboard
+</h1>
+""", unsafe_allow_html=True)
+
+st.markdown(
+    "<h3 style='text-align:center; color:white;'>Real-time traffic prediction & signal optimization</h3>",
+    unsafe_allow_html=True
+)
 
 # ------------------ LOAD MODEL ------------------
 model = pickle.load(open("model.pkl", "rb"))
@@ -38,13 +48,6 @@ traffic_map_reverse = {
     2: "Heavy",
     3: "High"
 }
-
-# ------------------ TITLE ------------------
-st.markdown(
-    "<h1 style='text-align: center; color:#00f2ff;'>🚦 Smart Traffic  Dashboard</h1>",
-    unsafe_allow_html=True
-)
-st.markdown("### Real-time traffic prediction & signal optimization")
 
 # ------------------ SIDEBAR ------------------
 st.sidebar.header("🚘 Input Traffic Data")
@@ -125,7 +128,6 @@ if simulate:
 
         total = car + bike + bus + truck
 
-        # Hybrid logic
         if total > 220:
             traffic_label = "High"
             signal = 90
@@ -138,10 +140,8 @@ if simulate:
             traffic_label = traffic_map_reverse[pred]
             signal = get_signal_time(pred)
 
-        # Update metrics
         metric_placeholder.metric("🚦 Signal Time", f"{signal} sec")
 
-        # Update vehicle chart
         df_live = pd.DataFrame({
             "Vehicle": ["Car", "Bike", "Bus", "Truck"],
             "Count": [car, bike, bus, truck]
@@ -149,7 +149,6 @@ if simulate:
 
         chart_placeholder.bar_chart(df_live.set_index("Vehicle"))
 
-        # Update trend
         signal_history.append(signal)
 
         trend_df = pd.DataFrame({
