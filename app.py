@@ -634,7 +634,7 @@ if simulate:
 
         time.sleep(1)
 
-    st.success("✅ Simulation complete.")
+    st.success("✅ Simulation complete .") 
 
 
 # ── FOOTER ────────────────────────────────────────────────────────────────────
