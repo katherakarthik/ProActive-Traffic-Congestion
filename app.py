@@ -7,31 +7,61 @@ import time
 import random
 
 # ------------------ CONFIG ------------------
-st.set_page_config(page_title="Traffic Dashboard", layout="wide")
+st.set_page_config(page_title="Traffic AI Dashboard", layout="wide")
 
-# ------------------ DARK THEME ------------------
+# ------------------ GLOBAL STYLES ------------------
 st.markdown("""
 <style>
+
+/* App background */
 .stApp {
-    background-color: #0e1117 !important;
+    background-color: #0e1117;
 }
+
+/* Sidebar */
+[data-testid="stSidebar"] {
+    background-color: #161b22;
+}
+
+/* Cards */
+.card {
+    background: rgba(255,255,255,0.05);
+    padding: 20px;
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
+    margin-bottom: 20px;
+}
+
+/* Neon headings */
+.heading {
+    color:#00ffff;
+    text-shadow:0 0 10px #00ffff;
+}
+
+/* Signal indicator */
+.signal {
+    font-size: 25px;
+    font-weight: bold;
+}
+
+/* Responsive fix */
+@media (max-width: 768px) {
+    .card {
+        padding: 15px;
+    }
+}
+
 </style>
 """, unsafe_allow_html=True)
 
 # ------------------ TITLE ------------------
 st.markdown("""
-<h1 style='
-text-align:center;
-color:#00ffff;
-font-weight:700;
-text-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff;
-'>
-🚦 Smart Traffic Dashboard
-</h1>
+<h1 style='text-align:center;color:#00ffff;
+text-shadow:0 0 10px #00ffff;'>🚦 Smart Traffic Dashboard</h1>
 """, unsafe_allow_html=True)
 
 st.markdown(
-    "<h3 style='text-align:center; color:white;'>Real-time traffic prediction & signal optimization</h3>",
+    "<h3 style='text-align:center;color:white;'>Real-time traffic prediction & signal optimization</h3>",
     unsafe_allow_html=True
 )
 
@@ -49,6 +79,14 @@ traffic_map_reverse = {
     3: "High"
 }
 
+def signal_color(label):
+    return {
+        "Low": "🟢",
+        "Normal": "🟡",
+        "Heavy": "🟠",
+        "High": "🔴"
+    }[label]
+
 # ------------------ SIDEBAR ------------------
 st.sidebar.header("🚘 Input Traffic Data")
 
@@ -63,7 +101,7 @@ simulate = st.sidebar.checkbox("🔄 Enable Live Simulation")
 
 total = car + bike + bus + truck
 
-# ------------------ STATIC PREDICTION ------------------
+# ------------------ PREDICTION ------------------
 col1, col2 = st.columns(2)
 
 if st.sidebar.button("Predict"):
@@ -80,23 +118,25 @@ if st.sidebar.button("Predict"):
         traffic_label = traffic_map_reverse[pred]
         signal = get_signal_time(pred)
 
+    # ---------- CARD 1 ----------
     with col1:
-        st.subheader("🚦 Prediction Result")
+        st.markdown('<div class="card">', unsafe_allow_html=True)
 
-        if traffic_label == "Low":
-            st.success(f"🟢 {traffic_label}")
-        elif traffic_label == "Normal":
-            st.info(f"🟡 {traffic_label}")
-        elif traffic_label == "Heavy":
-            st.warning(f"🟠 {traffic_label}")
-        else:
-            st.error(f"🔴 {traffic_label}")
+        st.markdown(f"<h2 class='heading'>🚦 Prediction Result</h2>", unsafe_allow_html=True)
 
-        st.metric("Signal Time", f"{signal} sec")
-        st.metric("Total Vehicles", total)
+        st.markdown(f"""
+        <p class='signal'>{signal_color(traffic_label)} {traffic_label}</p>
+        <h3 style='color:white;'>Signal Time: {signal} sec</h3>
+        <h3 style='color:white;'>Total Vehicles: {total}</h3>
+        """, unsafe_allow_html=True)
 
+        st.markdown('</div>', unsafe_allow_html=True)
+
+    # ---------- CARD 2 ----------
     with col2:
-        st.subheader("📊 Vehicle Distribution")
+        st.markdown('<div class="card">', unsafe_allow_html=True)
+
+        st.markdown("<h2 class='heading'>📊 Vehicle Distribution</h2>", unsafe_allow_html=True)
 
         df_chart = pd.DataFrame({
             "Vehicle": ["Car","Bike","Bus","Truck"],
@@ -105,21 +145,19 @@ if st.sidebar.button("Predict"):
 
         st.bar_chart(df_chart.set_index("Vehicle"))
 
+        st.markdown('</div>', unsafe_allow_html=True)
+
 # ------------------ LIVE SIMULATION ------------------
 if simulate:
 
-    st.subheader("📡 Live Traffic Simulation")
+    st.markdown("<h2 class='heading'>📡 Live Traffic Simulation</h2>", unsafe_allow_html=True)
 
     chart_placeholder = st.empty()
-    metric_placeholder = st.empty()
     trend_placeholder = st.empty()
 
     signal_history = []
 
-    for i in range(30):
-
-        hour = random.randint(0, 23)
-        day = random.randint(1, 7)
+    for i in range(20):
 
         car = random.randint(20, 250)
         bike = random.randint(10, 150)
@@ -140,10 +178,8 @@ if simulate:
             traffic_label = traffic_map_reverse[pred]
             signal = get_signal_time(pred)
 
-        metric_placeholder.metric("🚦 Signal Time", f"{signal} sec")
-
         df_live = pd.DataFrame({
-            "Vehicle": ["Car", "Bike", "Bus", "Truck"],
+            "Vehicle": ["Car","Bike","Bus","Truck"],
             "Count": [car, bike, bus, truck]
         })
 
@@ -158,20 +194,27 @@ if simulate:
 
         trend_placeholder.line_chart(trend_df.set_index("Step"))
 
-        st.write(f"Hour: {hour} | Traffic: {traffic_label} | Total: {total}")
+        st.markdown(
+            f"<p style='color:white;'>Traffic: {traffic_label} | Signal: {signal}</p>",
+            unsafe_allow_html=True
+        )
 
         time.sleep(1)
 
 # ------------------ FEATURE IMPORTANCE ------------------
-st.subheader("🧠 Feature Importance")
+st.markdown("<h2 class='heading'>🧠 Feature Importance</h2>", unsafe_allow_html=True)
 
 try:
     importance = model.feature_importances_
     features = ["Hour","Day","Car","Bike","Bus","Truck","Total"]
 
     fig, ax = plt.subplots()
-    ax.barh(features, importance)
-    ax.set_title("Feature Importance")
+    fig.patch.set_facecolor('#0e1117')
+    ax.set_facecolor('#0e1117')
+
+    ax.barh(features, importance, color='#00ffff')
+    ax.tick_params(colors='white')
+    ax.set_title("Feature Importance", color='white')
 
     st.pyplot(fig)
 
@@ -179,15 +222,18 @@ except:
     st.warning("Feature importance not available")
 
 # ------------------ TRAFFIC TREND ------------------
-st.subheader("📈 Traffic Signal Trend")
+st.markdown("<h2 class='heading'>📈 Traffic Signal Trend</h2>", unsafe_allow_html=True)
 
 hours = list(range(24))
 signal_times = [30,30,30,30,30,30,50,70,90,90,70,50,
                 50,70,90,90,70,50,50,70,90,90,50,30]
 
-trend_df = pd.DataFrame({
-    "Hour": hours,
-    "Signal Time": signal_times
-})
+fig, ax = plt.subplots()
+fig.patch.set_facecolor('#0e1117')
+ax.set_facecolor('#0e1117')
 
-st.line_chart(trend_df.set_index("Hour"))
+ax.plot(hours, signal_times, color='#00ffff')
+ax.tick_params(colors='white')
+ax.set_title("Traffic Signal Trend", color='white')
+
+st.pyplot(fig)
