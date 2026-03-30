@@ -26,7 +26,7 @@ h1, h2, h3 {color: #00f2ff;}
 """, unsafe_allow_html=True)
 
 # ------------------ LOAD MODEL ------------------
-model = pickle.load(open("C:/traffic_project/model.pkl", "rb"))
+model = pickle.load(open("model.pkl", "rb"))
 
 # ------------------ HELPERS ------------------
 def get_signal_time(label):
