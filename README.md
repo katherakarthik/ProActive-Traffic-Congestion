@@ -148,7 +148,7 @@ https://trafficdashboard8688.streamlit.app/
 ### 📊 Confusion Matrix
 
 <p align="center">
-  <img src="images/Confusion/Matrix.png" width="600"/>
+  <img src="images/Confusion_Matrix.png" width="600"/>
 </p>
 
 ---
