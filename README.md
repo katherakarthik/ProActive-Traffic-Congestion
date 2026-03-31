@@ -135,6 +135,30 @@ https://trafficdashboard8688.streamlit.app/
 
 ---
 
+## 📸 Project Preview
+
+### 🚦 Dashboard
+
+<p align="center">
+  <img src="images/dashboard.png" width="800"/>
+</p>
+
+---
+
+### 📊 Confusion Matrix
+
+<p align="center">
+  <img src="images/Confusion/Matrix.png" width="600"/>
+</p>
+
+---
+
+### 🧠 Feature Importance
+
+<p align="center">
+  <img src="images/Feature_Importance.png" width="700"/>
+</p>
+
 ## ⚠️ Limitations
 
 Let’s be real:
